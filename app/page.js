@@ -124,6 +124,18 @@ export default function SleepLog() {
 
       {!sessions && (
         <div style={{ padding:20 }}>
+          <details style={{ marginBottom:16, background:C.card, border:`1px solid ${C.border}`, borderRadius:12, overflow:"hidden" }}>
+            <summary style={{ padding:"12px 16px", cursor:"pointer", fontSize:13, fontWeight:600, color:"#c8c0e0", listStyle:"none", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+              <span>🔒 プライバシーとセキュリティについて</span>
+              <span style={{ fontSize:11, color:C.sub }}>タップして確認</span>
+            </summary>
+            <div style={{ padding:"0 16px 16px", fontSize:12, color:C.sub, lineHeight:1.9 }}>
+              <p style={{ margin:"12px 0 8px 0" }}>このアプリはアップロードされたデータをサーバーに一切送信しません。</p>
+              <p style={{ margin:"0 0 8px 0" }}>すべての処理はあなたのブラウザ内で完結します。</p>
+              <p style={{ margin:"0 0 8px 0" }}>アップロードしたファイルの内容が外部に送信されたり、本サービスに保存・利用されることはありません。</p>
+              <p style={{ margin:0 }}>インターネット接続はアプリの読み込み時のみ使用されます。</p>
+            </div>
+          </details>
           <label style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
             border:`2px dashed ${C.border}`, borderRadius:16, padding:"52px 24px",
             cursor:"pointer", background:C.card, gap:14 }}>

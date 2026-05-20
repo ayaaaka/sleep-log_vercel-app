@@ -40,15 +40,6 @@ docker compose up prod --build
 
 `http://localhost:3001` でアクセスできる。Vercel へデプロイする前の動作確認に使う。
 
-### Docker を使わない場合（Node.js 直接）
-
-```bash
-npm install
-npm run dev     # 開発サーバー
-npm run build   # 本番ビルド
-npm start       # 本番サーバー起動
-```
-
 ## 動作確認方法
 
 1. Apple Health アプリ → プロフィール → 「ヘルスデータをエクスポート」

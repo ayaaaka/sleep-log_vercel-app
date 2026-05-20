@@ -1,0 +1,18 @@
+.outer-container {
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.pc-br {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .outer-container {
+    max-width: 800px;
+  }
+  .pc-br {
+    display: inline;
+  }
+}

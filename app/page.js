@@ -119,7 +119,11 @@ export default function SleepLog() {
 
       <div style={{ padding:"28px 20px 16px", borderBottom:`1px solid ${C.border}` }}>
         <div style={{ fontSize:10, letterSpacing:4, color:C.sub, marginBottom:4 }}>SLEEP LOG</div>
-        <div style={{ fontSize:22, fontWeight:700 }}>睡眠ログ</div>
+        <div style={{ fontSize:22, fontWeight:700, marginBottom:10 }}>睡眠ログ</div>
+        <div style={{ fontSize:11, color:C.sub, lineHeight:1.8 }}>
+          <div style={{ marginBottom:4 }}>対応環境：iPhone（iOS）限定 / Apple Watch推奨</div>
+          <div>Apple Watchを装着して睡眠することで、睡眠ステージの自動記録が可能になります。Apple Watchをお持ちでない場合も、手動入力のデータがあれば睡眠時間の確認が可能です。</div>
+        </div>
       </div>
 
       {!sessions && (

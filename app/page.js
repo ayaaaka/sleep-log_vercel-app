@@ -284,7 +284,7 @@ export default function SleepLog() {
               );
             })}
 
-            {daySessions.length > 0 && (
+            {!dateNotFound && daySessions.length > 0 && (
               <div style={{ padding:"14px 18px", background:C.card, border:`1px solid ${C.border}`,
                 borderRadius:14, display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:2 }}>
                 <div style={{ fontSize:13, color:C.sub }}>合計睡眠時間（覚醒除く）</div>

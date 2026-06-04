@@ -197,6 +197,13 @@ export default function SleepLog() {
             ) : daySessions.map((s, i) => {
               const crossStart = s.startJST.dateStr !== currentDate;
               const crossEnd   = s.endJST.dateStr   !== currentDate;
+              const inBedMin = (s.end - s.start) / 60000;
+              const awakePercent = Math.round((1 - s.asleepMin / inBedMin) * 100);
+              const stats = [
+                { label:"在床", value:fmt(inBedMin), color:C.sub },
+                { label:"睡眠", value:fmt(s.asleepMin), color:C.sub },
+                { label:"覚醒", value:`${awakePercent}%`, color: awakePercent >= 20 ? "#E8956D" : C.sub },
+              ];
               return (
                 <div key={i} style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:14,
                   padding:"18px 20px", marginBottom:10 }}>
@@ -212,10 +219,17 @@ export default function SleepLog() {
                         {fmtTime(s.startJST)}
                       </div>
                     </div>
-                    <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:5 }}>
+                    <div style={{ flex:1, display:"flex", flexDirection:"column", alignItems:"center", gap:6 }}>
                       <div style={{ width:"100%", height:1,
                         background:`linear-gradient(to right, ${C.border}, ${C.accent}, ${C.border})` }} />
-                      <div style={{ fontSize:12, color:C.sub }}>{fmt(s.asleepMin)}</div>
+                      <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:"4px 14px" }}>
+                        {stats.map(({ label, value, color }) => (
+                          <div key={label} style={{ textAlign:"center" }}>
+                            <div style={{ fontSize:10, color:C.sub, marginBottom:1 }}>{label}</div>
+                            <div style={{ fontSize:12, fontWeight:600, color }}>{value}</div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     <div style={{ textAlign:"center", minWidth:56 }}>
                       {crossEnd && (
@@ -236,7 +250,7 @@ export default function SleepLog() {
             {daySessions.length > 0 && (
               <div style={{ padding:"14px 18px", background:C.card, border:`1px solid ${C.border}`,
                 borderRadius:14, display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:2 }}>
-                <div style={{ fontSize:13, color:C.sub }}>合計睡眠時間</div>
+                <div style={{ fontSize:13, color:C.sub }}>合計睡眠時間（覚醒除く）</div>
                 <div style={{ fontSize:20, fontWeight:700, color:"#9B72CF" }}>{fmt(totalMin)}</div>
               </div>
             )}

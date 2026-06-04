@@ -1,0 +1,22 @@
+# dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# local env files
+.env
+.env*.local
+
+# macOS
+.DS_Store
+
+# Claude Code (contains PII and local permissions)
+.claude/
+
+# gstack (local tool state and security reports)
+.gstack/
+
+# Docker volumes
+.dockerenv

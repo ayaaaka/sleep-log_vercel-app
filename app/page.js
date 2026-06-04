@@ -207,13 +207,26 @@ export default function SleepLog() {
             <input type="date" onChange={handleJump}
               style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:8,
                 padding:"5px 8px", color:C.text, fontSize:13, colorScheme:"dark" }} />
-            {dateNotFound && (
-              <span style={{ fontSize:12, color:"#E8956D" }}>この日付のデータはありません</span>
-            )}
           </div>
 
           <div style={{ padding:"16px 16px 0" }}>
-            {daySessions.length === 0 ? (
+            {dateNotFound ? (
+              <div style={{ textAlign:"center", padding:"56px 20px" }}>
+                <div style={{ fontSize:16, color:"#E8956D", marginBottom:28 }}>この日付のデータはありません</div>
+                <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:10 }}>
+                  <button onClick={() => { setCurrentDate(allDates[0]); setDateNotFound(false); }}
+                    style={{ fontSize:13, color:C.text, background:C.card, border:`1px solid ${C.border}`,
+                      borderRadius:20, padding:"8px 20px", cursor:"pointer" }}>
+                    データの最初の日付を見る（{fmtDate(allDates[0])}）
+                  </button>
+                  <button onClick={() => { setCurrentDate(allDates[allDates.length-1]); setDateNotFound(false); }}
+                    style={{ fontSize:13, color:C.text, background:C.card, border:`1px solid ${C.border}`,
+                      borderRadius:20, padding:"8px 20px", cursor:"pointer" }}>
+                    データの最後の日付を見る（{fmtDate(allDates[allDates.length-1])}）
+                  </button>
+                </div>
+              </div>
+            ) : daySessions.length === 0 ? (
               <div style={{ textAlign:"center", padding:"56px 0", color:C.sub, fontSize:14 }}>
                 この日の睡眠データはありません
               </div>

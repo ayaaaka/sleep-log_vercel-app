@@ -70,6 +70,7 @@ export default function SleepLog() {
   const [currentDate, setCurrentDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [dateNotFound, setDateNotFound] = useState(false);
   const touchStartX = useRef(null);
 
   const handleFile = async (e) => {
@@ -101,12 +102,23 @@ export default function SleepLog() {
   const prevDate = idx > 0 ? allDates[idx-1] : null;
   const nextDate = idx < allDates.length-1 ? allDates[idx+1] : null;
 
+  const handleJump = (e) => {
+    const d = e.target.value;
+    if (!d) { setDateNotFound(false); return; }
+    if (allDates.includes(d)) {
+      setCurrentDate(d);
+      setDateNotFound(false);
+    } else {
+      setDateNotFound(true);
+    }
+  };
+
   const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e) => {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (dx > 50 && prevDate) setCurrentDate(prevDate);
-    if (dx < -50 && nextDate) setCurrentDate(nextDate);
+    if (dx > 50 && prevDate) { setCurrentDate(prevDate); setDateNotFound(false); }
+    if (dx < -50 && nextDate) { setCurrentDate(nextDate); setDateNotFound(false); }
     touchStartX.current = null;
   };
 
@@ -168,7 +180,7 @@ export default function SleepLog() {
         <div style={{ paddingBottom:48 }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between",
             padding:"14px 12px", borderBottom:`1px solid ${C.border}`, gap:8 }}>
-            <button onClick={() => prevDate && setCurrentDate(prevDate)}
+            <button onClick={() => { if (prevDate) { setCurrentDate(prevDate); setDateNotFound(false); } }}
               style={{ width:44, height:44, borderRadius:22, border:`1px solid ${C.border}`, background:"transparent",
                 color: prevDate ? C.text : C.border, fontSize:22, cursor: prevDate ? "pointer" : "default", flexShrink:0 }}>
               ‹
@@ -182,11 +194,22 @@ export default function SleepLog() {
                 {!prevDate && !nextDate && "　"}
               </div>
             </div>
-            <button onClick={() => nextDate && setCurrentDate(nextDate)}
+            <button onClick={() => { if (nextDate) { setCurrentDate(nextDate); setDateNotFound(false); } }}
               style={{ width:44, height:44, borderRadius:22, border:`1px solid ${C.border}`, background:"transparent",
                 color: nextDate ? C.text : C.border, fontSize:22, cursor: nextDate ? "pointer" : "default", flexShrink:0 }}>
               ›
             </button>
+          </div>
+
+          <div style={{ padding:"10px 16px", borderBottom:`1px solid ${C.border}`,
+            display:"flex", alignItems:"center", justifyContent:"center", gap:8, flexWrap:"wrap" }}>
+            <span style={{ fontSize:12, color:C.sub }}>日付を指定：</span>
+            <input type="date" onChange={handleJump}
+              style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:8,
+                padding:"5px 8px", color:C.text, fontSize:13, colorScheme:"dark" }} />
+            {dateNotFound && (
+              <span style={{ fontSize:12, color:"#E8956D" }}>この日付のデータはありません</span>
+            )}
           </div>
 
           <div style={{ padding:"16px 16px 0" }}>

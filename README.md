@@ -26,7 +26,7 @@ Copyright (c) 2026 Ayaka Kobayashi. All rights reserved.
 
 本リポジトリのソースコードは閲覧目的でのみ公開しています。
 公開中のWebアプリは個人かつ非商用の範囲で利用できます。
-詳細は [LICENSE](./LICENSE) をご覧ください。
+詳細は [LICENSE](./LICENSE.md) をご覧ください。
 
 機能の改善要望や不具合報告は X ([@roadstagineer](https://x.com/roadstagineer)) までお気軽にどうぞ。
 
@@ -34,7 +34,7 @@ Copyright (c) 2026 Ayaka Kobayashi. All rights reserved.
 
 This source code is publicly available for viewing only.
 The web application may be used for personal, non-commercial purposes.
-See [LICENSE](./LICENSE) for details.
+See [LICENSE](./LICENSE.md) for details.
 
 ---
 

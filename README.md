@@ -22,19 +22,19 @@ X: [@roadstagineer](https://x.com/roadstagineer)
 
 ## ライセンス / License
 
-このプロジェクトは [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.ja) のもとで公開されています。
+Copyright (c) 2026 Ayaka Kobayashi. All rights reserved.
 
-- 商用利用禁止
-- 改変禁止
-- 再配布禁止
-- 個人利用の範囲でご使用ください
+本リポジトリのソースコードは閲覧目的でのみ公開しています。
+公開中のWebアプリは個人かつ非商用の範囲で利用できます。
+詳細は [LICENSE](./LICENSE) をご覧ください。
 
 機能の改善要望や不具合報告は X ([@roadstagineer](https://x.com/roadstagineer)) までお気軽にどうぞ。
 
 ---
 
-This project is licensed under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).  
-Commercial use, modification, and redistribution are prohibited. Personal use only.
+This source code is publicly available for viewing only.
+The web application may be used for personal, non-commercial purposes.
+See [LICENSE](./LICENSE) for details.
 
 ---
 

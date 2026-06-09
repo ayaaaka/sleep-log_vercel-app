@@ -1,4 +1,5 @@
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: "睡眠ログ",
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
       </head>
       <body style={{ margin: 0, padding: 0, background: "#0e0e1c" }}>
         {children}
+        <Analytics />
       </body>
     </html>
   );

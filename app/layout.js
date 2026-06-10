@@ -4,6 +4,14 @@ import { Analytics } from '@vercel/analytics/react';
 export const metadata = {
   title: "睡眠ログ",
   description: "Apple Healthの睡眠データビューア",
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/icon-192.png', sizes: '192x192' },
+      { url: '/icon-512.png', sizes: '512x512' },
+    ],
+    apple: '/apple-touch-icon.png',
+  },
 };
 
 export const viewport = {

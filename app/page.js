@@ -47,7 +47,7 @@ function groupIntoSessions(records) {
     const start = segs[0].start;
     const end   = segs[segs.length-1].end;
     const asleepMin = segs.filter(s => s.type !== "Awake").reduce((s, x) => s + (x.end - x.start)/60000, 0);
-    return { start, end, startJST: toJST(start), endJST: toJST(end), asleepMin };
+    return { start, end, startJST: toJST(start), endJST: toJST(end), asleepMin, segs };
   }).filter(s => s.asleepMin > 5);
 }
 
@@ -98,7 +98,18 @@ export default function SleepLog() {
     return sessions.filter(s => s.startJST.dateStr === currentDate || s.endJST.dateStr === currentDate);
   }, [sessions, currentDate]);
 
-  const totalMin = daySessions.reduce((s, x) => s + x.asleepMin, 0);
+  const dayStartMs = new Date(currentDate + "T00:00:00+09:00").getTime();
+  const dayEndMs   = dayStartMs + 24 * 60 * 60 * 1000;
+  const totalMin = daySessions.reduce((total, s) => {
+    const clipped = s.segs
+      .filter(seg => seg.type !== "Awake")
+      .reduce((sum, seg) => {
+        const clipStart = Math.max(seg.start.getTime(), dayStartMs);
+        const clipEnd   = Math.min(seg.end.getTime(),   dayEndMs);
+        return sum + Math.max(0, (clipEnd - clipStart) / 60000);
+      }, 0);
+    return total + clipped;
+  }, 0);
   const idx = allDates.indexOf(currentDate);
   const prevDate = idx > 0 ? allDates[idx-1] : null;
   const nextDate = idx < allDates.length-1 ? allDates[idx+1] : null;

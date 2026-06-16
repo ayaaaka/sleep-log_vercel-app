@@ -7,6 +7,9 @@
     "build": "next build",
     "start": "next start"
   },
+  "overrides": {
+    "postcss": "^8.5.15"
+  },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
     "next": "^16.2.7",

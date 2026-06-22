@@ -15,4 +15,7 @@
   .pc-br {
     display: inline;
   }
+  .sp-calendar-emoji {
+    display: none;
+  }
 }

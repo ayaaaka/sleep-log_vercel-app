@@ -233,6 +233,7 @@ export default function SleepLog() {
             <input type="date" ref={dateInputRef} onChange={handleJump}
               style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:8,
                 padding:"5px 8px", color:C.text, fontSize:13, colorScheme:"dark" }} />
+            <span className="sp-calendar-emoji" style={{ fontSize:18 }}>🗓️</span>
           </div>
 
           <div style={{ padding:"16px 16px 0" }}>

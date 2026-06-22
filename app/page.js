@@ -134,7 +134,21 @@ export default function SleepLog() {
     touchStartX.current = null;
   };
 
-  const C = { bg:"#0e0e1c", card:"#161628", border:"#252545", accent:"#7B6FA0", text:"#e2dff0", sub:"#5a5480" };
+  const C = {
+    bg:          "#0B0B18",
+    card:        "#17162A",
+    hover:       "#1D1B34",
+    border:      "rgba(154, 139, 219, 0.28)",
+    borderStrong:"rgba(184, 160, 255, 0.45)",
+    accent:      "#B794F6",
+    accentStrong:"#C7A8FF",
+    heading:     "#F3F0FF",
+    text:        "#B9AEDF",
+    sub:         "#9186B8",
+    link:        "#B794F6",
+    warn:        "#FFB86B",
+    warnFaint:   "rgba(255, 184, 107, 0.35)",
+  };
 
   return (
     <div className="outer-container" style={{ background:C.bg, color:C.text,
@@ -143,8 +157,8 @@ export default function SleepLog() {
 
       <div style={{ padding:"28px 20px 16px", borderBottom:`1px solid ${C.border}` }}>
         <div style={{ fontSize:10, letterSpacing:4, color:C.sub, marginBottom:4 }}>SLEEP LOG</div>
-        <div style={{ fontSize:22, fontWeight:700, marginBottom:10 }}>睡眠ログ</div>
-        <div style={{ fontSize:11, color:C.sub, lineHeight:1.8 }}>
+        <div style={{ fontSize:22, fontWeight:700, marginBottom:10, color:C.heading }}>睡眠ログ</div>
+        <div style={{ fontSize:14, color:C.sub, lineHeight:1.8 }}>
           <div style={{ marginBottom:4 }}>対応環境：iPhone（iOS）限定 / Apple Watch推奨</div>
           <div>Apple Watchを装着して睡眠することで、睡眠ステージの自動記録が可能になります。Apple Watchをお持ちでない場合も、手動入力のデータがあれば睡眠時間の確認が可能です。</div>
         </div>
@@ -153,11 +167,11 @@ export default function SleepLog() {
       {!sessions && (
         <div style={{ padding:20 }}>
           <details style={{ marginBottom:16, background:C.card, border:`1px solid ${C.border}`, borderRadius:12, overflow:"hidden" }}>
-            <summary style={{ padding:"12px 16px", cursor:"pointer", fontSize:13, fontWeight:600, color:"#c8c0e0", listStyle:"none", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+            <summary style={{ padding:"12px 16px", cursor:"pointer", fontSize:13, fontWeight:600, color:C.text, listStyle:"none", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
               <span>🔒 プライバシーとセキュリティについて</span>
               <span style={{ fontSize:11, color:C.sub }}>タップして確認</span>
             </summary>
-            <div style={{ padding:"0 16px 16px", fontSize:12, color:C.sub, lineHeight:1.9 }}>
+            <div style={{ padding:"0 16px 16px", fontSize:13, color:C.sub, lineHeight:1.9 }}>
               <p style={{ margin:"12px 0 8px 0" }}>このアプリはアップロードされたデータをサーバーに一切送信しません。</p>
               <p style={{ margin:"0 0 8px 0" }}>すべての処理はあなたのブラウザ内で完結します。</p>
               <p style={{ margin:"0 0 8px 0" }}>アップロードしたファイルの内容が外部に送信されたり、本サービスに保存・利用されることはありません。</p>
@@ -165,16 +179,16 @@ export default function SleepLog() {
             </div>
           </details>
           <label style={{ display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center",
-            border:`2px dashed ${C.border}`, borderRadius:16, padding:"52px 24px",
+            border:`2px dashed ${C.borderStrong}`, borderRadius:16, padding:"52px 24px",
             cursor:"pointer", background:C.card, gap:14 }}>
             <input type="file" accept=".xml" onChange={handleFile} style={{ display:"none" }} />
             <div style={{ fontSize:40 }}>📂</div>
-            <div style={{ fontSize:15, fontWeight:600, color:"#c8c0e0" }}>export.xml を選択</div>
-            <div style={{ fontSize:12, color:C.sub, lineHeight:2.0, width:"100%" }}>
+            <div style={{ fontSize:15, fontWeight:600, color:C.heading }}>export.xml を選択</div>
+            <div style={{ fontSize:13, color:C.sub, lineHeight:2.0, width:"100%" }}>
               <p style={{ margin:"0 0 10px 0" }}>Appleヘルスケア → 右上のアイコン押下 → 「すべてのヘルスケアデータを書き出す」でエクスポートしてください。</p>
               <p style={{ margin:"0 0 10px 0" }}>zipを解凍後、apple_health_export フォルダ内の export.xml をアップロードしてください。</p>
               <p style={{ margin:"0 0 10px 0" }}>ファイルが大きい場合は読み込みに失敗することがあります。<br className="pc-br" />必要な期間のデータに切り取るなど整形してからアップロードし直してください。</p>
-              <p style={{ margin:0 }}>お問い合わせは作成者の <a href="https://x.com/roadstagineer" target="_blank" rel="noopener noreferrer" style={{ color:"#9B72CF" }}>X (@roadstagineer)</a> まで。</p>
+              <p style={{ margin:0 }}>お問い合わせは作成者の <a href="https://x.com/roadstagineer" target="_blank" rel="noopener noreferrer" style={{ color:C.link }}>X (@roadstagineer)</a> まで。</p>
             </div>
           </label>
           {loading && (
@@ -194,11 +208,11 @@ export default function SleepLog() {
             padding:"14px 12px", borderBottom:`1px solid ${C.border}`, gap:8 }}>
             <button onClick={() => { if (prevDate) { setCurrentDate(prevDate); setDateNotFound(false); } }}
               style={{ width:44, height:44, borderRadius:22, border:`1px solid ${C.border}`, background:"transparent",
-                color: prevDate ? C.text : C.border, fontSize:22, cursor: prevDate ? "pointer" : "default", flexShrink:0 }}>
+                color: prevDate ? C.heading : C.sub, fontSize:22, cursor: prevDate ? "pointer" : "default", flexShrink:0 }}>
               ‹
             </button>
             <div style={{ textAlign:"center", flex:1 }}>
-              <div style={{ fontSize:18, fontWeight:700 }}>{fmtDate(currentDate)}</div>
+              <div style={{ fontSize:18, fontWeight:700, color:C.heading }}>{fmtDate(currentDate)}</div>
               <div style={{ fontSize:11, color:C.sub, marginTop:3 }}>
                 {prevDate && `← ${new Date(prevDate+"T12:00:00+09:00").getDate()}日`}
                 {prevDate && nextDate && "　"}
@@ -208,7 +222,7 @@ export default function SleepLog() {
             </div>
             <button onClick={() => { if (nextDate) { setCurrentDate(nextDate); setDateNotFound(false); } }}
               style={{ width:44, height:44, borderRadius:22, border:`1px solid ${C.border}`, background:"transparent",
-                color: nextDate ? C.text : C.border, fontSize:22, cursor: nextDate ? "pointer" : "default", flexShrink:0 }}>
+                color: nextDate ? C.heading : C.sub, fontSize:22, cursor: nextDate ? "pointer" : "default", flexShrink:0 }}>
               ›
             </button>
           </div>
@@ -224,7 +238,7 @@ export default function SleepLog() {
           <div style={{ padding:"16px 16px 0" }}>
             {dateNotFound ? (
               <div style={{ textAlign:"center", padding:"56px 20px" }}>
-                <div style={{ fontSize:16, color:"#E8956D", marginBottom:28 }}>この日付のデータはありません</div>
+                <div style={{ fontSize:16, color:C.warn, marginBottom:28 }}>この日付のデータはありません</div>
                 <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:10 }}>
                   <button onClick={() => { setCurrentDate(allDates[0]); setDateNotFound(false); if (dateInputRef.current) dateInputRef.current.value = ""; }}
                     style={{ fontSize:13, color:C.text, background:C.card, border:`1px solid ${C.border}`,
@@ -248,9 +262,9 @@ export default function SleepLog() {
               const inBedMin = (s.end - s.start) / 60000;
               const awakePercent = Math.round((1 - s.asleepMin / inBedMin) * 100);
               const stats = [
-                { label:"在床", value:fmt(inBedMin), color:C.sub },
-                { label:"睡眠", value:fmt(s.asleepMin), color:C.sub },
-                { label:"覚醒", value:`${awakePercent}%`, color: awakePercent >= 20 ? "#E8956D" : C.sub },
+                { label:"在床", value:fmt(inBedMin), color:C.heading },
+                { label:"睡眠", value:fmt(s.asleepMin), color:C.heading },
+                { label:"覚醒", value:`${awakePercent}%`, color: awakePercent >= 20 ? C.warn : C.warnFaint },
               ];
               return (
                 <div key={i} style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:14,
@@ -263,7 +277,7 @@ export default function SleepLog() {
                         </div>
                       )}
                       <div style={{ fontSize:28, fontWeight:700, fontVariantNumeric:"tabular-nums",
-                        letterSpacing:-1, lineHeight:1 }}>
+                        letterSpacing:-1, lineHeight:1, color:C.heading }}>
                         {fmtTime(s.startJST)}
                       </div>
                     </div>
@@ -273,7 +287,7 @@ export default function SleepLog() {
                       <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:"4px 14px" }}>
                         {stats.map(({ label, value, color }) => (
                           <div key={label} style={{ textAlign:"center" }}>
-                            <div style={{ fontSize:10, color:C.sub, marginBottom:1 }}>{label}</div>
+                            <div style={{ fontSize:10, color:C.text, marginBottom:1 }}>{label}</div>
                             <div style={{ fontSize:12, fontWeight:600, color }}>{value}</div>
                           </div>
                         ))}
@@ -281,12 +295,12 @@ export default function SleepLog() {
                     </div>
                     <div style={{ textAlign:"center", minWidth:56 }}>
                       {crossEnd && (
-                        <div style={{ fontSize:10, color:"#E8956D", marginBottom:2, whiteSpace:"nowrap" }}>
+                        <div style={{ fontSize:10, color:C.warn, marginBottom:2, whiteSpace:"nowrap" }}>
                           翌日 {s.endJST.month}/{s.endJST.day}
                         </div>
                       )}
                       <div style={{ fontSize:28, fontWeight:700, fontVariantNumeric:"tabular-nums",
-                        letterSpacing:-1, lineHeight:1 }}>
+                        letterSpacing:-1, lineHeight:1, color:C.heading }}>
                         {fmtTime(s.endJST)}
                       </div>
                     </div>
@@ -299,14 +313,14 @@ export default function SleepLog() {
               <div style={{ padding:"14px 18px", background:C.card, border:`1px solid ${C.border}`,
                 borderRadius:14, display:"flex", justifyContent:"space-between", alignItems:"center", marginTop:2 }}>
                 <div style={{ fontSize:13, color:C.sub }}>合計睡眠時間（覚醒除く）</div>
-                <div style={{ fontSize:20, fontWeight:700, color:"#9B72CF" }}>{fmt(totalMin)}</div>
+                <div style={{ fontSize:20, fontWeight:700, color:C.heading }}>{fmt(totalMin)}</div>
               </div>
             )}
           </div>
 
           <div style={{ textAlign:"center", marginTop:28 }}>
             <button onClick={() => { setSessions(null); setCurrentDate(null); }}
-              style={{ fontSize:12, color:C.sub, background:"transparent", border:`1px solid ${C.border}`,
+              style={{ fontSize:12, color:C.text, background:"transparent", border:`1px solid ${C.border}`,
                 borderRadius:20, padding:"6px 18px", cursor:"pointer" }}>
               ← ファイルを変更
             </button>

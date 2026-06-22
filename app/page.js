@@ -76,6 +76,7 @@ export default function SleepLog() {
   const pickerWrapRef = useRef(null);
   const [showPicker, setShowPicker] = useState(false);
   const [pickerSelected, setPickerSelected] = useState(undefined);
+  const [spPickerTop, setSpPickerTop] = useState(0);
 
   const handleFile = async (e) => {
     const file = e.target.files[0];
@@ -129,6 +130,13 @@ export default function SleepLog() {
       setDateNotFound(true);
     }
   };
+
+  useEffect(() => {
+    if (showPicker && pickerWrapRef.current) {
+      const rect = pickerWrapRef.current.getBoundingClientRect();
+      setSpPickerTop(rect.top);
+    }
+  }, [showPicker]);
 
   useEffect(() => {
     if (!showPicker) return;
@@ -259,7 +267,7 @@ export default function SleepLog() {
                 <span style={{ fontSize:15 }}>🗓️</span>
               </button>
               {showPicker && (
-                <div style={{ position:"absolute", zIndex:200, top:"calc(100% + 6px)", left:"50%", transform:"translateX(-50%)",
+                <div className="day-picker-popup" style={{ position:"absolute", zIndex:200, top:"calc(100% + 6px)", left:"50%", transform:"translateX(-50%)", '--sp-top':`${spPickerTop}px`,
                   background:C.card, border:`1px solid ${C.borderStrong}`, borderRadius:14, overflow:"hidden",
                   boxShadow:"0 8px 32px rgba(0,0,0,0.6)" }}>
                   <DayPicker

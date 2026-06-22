@@ -10,6 +10,16 @@
   display: none;
 }
 
+@media (max-width: 639px) {
+  .day-picker-popup {
+    position: fixed !important;
+    left: 16px !important;
+    right: 16px !important;
+    top: var(--sp-top) !important;
+    transform: none !important;
+  }
+}
+
 @media (min-width: 640px) {
   .outer-container {
     max-width: 800px;

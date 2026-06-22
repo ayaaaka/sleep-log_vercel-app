@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useMemo, useRef } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
+import { DayPicker } from 'react-day-picker';
 
 function parseXML(xmlText) {
   const pattern = /<Record\s[^>]*HKCategoryTypeIdentifierSleepAnalysis[^>]*>/gs;
@@ -72,7 +73,9 @@ export default function SleepLog() {
   const [error, setError] = useState(null);
   const [dateNotFound, setDateNotFound] = useState(false);
   const touchStartX = useRef(null);
-  const dateInputRef = useRef(null);
+  const pickerWrapRef = useRef(null);
+  const [showPicker, setShowPicker] = useState(false);
+  const [pickerSelected, setPickerSelected] = useState(undefined);
 
   const handleFile = async (e) => {
     const file = e.target.files[0];
@@ -114,9 +117,11 @@ export default function SleepLog() {
   const prevDate = idx > 0 ? allDates[idx-1] : null;
   const nextDate = idx < allDates.length-1 ? allDates[idx+1] : null;
 
-  const handleJump = (e) => {
-    const d = e.target.value;
-    if (!d) { setDateNotFound(false); return; }
+  const handleDaySelect = (date) => {
+    if (!date) { setShowPicker(false); return; }
+    const d = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    setPickerSelected(date);
+    setShowPicker(false);
     if (allDates.includes(d)) {
       setCurrentDate(d);
       setDateNotFound(false);
@@ -124,6 +129,21 @@ export default function SleepLog() {
       setDateNotFound(true);
     }
   };
+
+  useEffect(() => {
+    if (!showPicker) return;
+    const handler = (e) => {
+      if (pickerWrapRef.current && !pickerWrapRef.current.contains(e.target)) {
+        setShowPicker(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    document.addEventListener('touchstart', handler);
+    return () => {
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('touchstart', handler);
+    };
+  }, [showPicker]);
 
   const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e) => {
@@ -230,10 +250,31 @@ export default function SleepLog() {
           <div style={{ padding:"10px 16px", borderBottom:`1px solid ${C.border}`,
             display:"flex", alignItems:"center", justifyContent:"center", gap:8, flexWrap:"wrap" }}>
             <span style={{ fontSize:12, color:C.sub }}>日付を指定：</span>
-            <input type="date" ref={dateInputRef} onChange={handleJump}
-              style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:8,
-                padding:"5px 8px", color:C.text, fontSize:13, colorScheme:"dark" }} />
-            <span className="sp-calendar-emoji" style={{ fontSize:18 }}>🗓️</span>
+            <div ref={pickerWrapRef} style={{ position:"relative" }}>
+              <button onClick={() => setShowPicker(!showPicker)}
+                style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:8,
+                  padding:"5px 8px", color: pickerSelected ? C.text : C.sub, fontSize:13, cursor:"pointer",
+                  display:"flex", alignItems:"center", justifyContent:"space-between", gap:10, minWidth:130 }}>
+                <span>{pickerSelected ? fmtDate(`${pickerSelected.getFullYear()}-${String(pickerSelected.getMonth()+1).padStart(2,'0')}-${String(pickerSelected.getDate()).padStart(2,'0')}`) : "年/月/日"}</span>
+                <span style={{ fontSize:15 }}>🗓️</span>
+              </button>
+              {showPicker && (
+                <div style={{ position:"absolute", zIndex:200, top:"calc(100% + 6px)", left:"50%", transform:"translateX(-50%)",
+                  background:C.card, border:`1px solid ${C.borderStrong}`, borderRadius:14, overflow:"hidden",
+                  boxShadow:"0 8px 32px rgba(0,0,0,0.6)" }}>
+                  <DayPicker
+                    mode="single"
+                    selected={pickerSelected}
+                    onSelect={handleDaySelect}
+                    defaultMonth={pickerSelected ?? (currentDate ? new Date(currentDate + "T12:00:00+09:00") : undefined)}
+                    formatters={{
+                      formatCaption: (month) => `${month.getFullYear()}年${month.getMonth()+1}月`,
+                      formatWeekdayName: (day) => ["日","月","火","水","木","金","土"][day.getDay()],
+                    }}
+                  />
+                </div>
+              )}
+            </div>
           </div>
 
           <div style={{ padding:"16px 16px 0" }}>
@@ -241,12 +282,12 @@ export default function SleepLog() {
               <div style={{ textAlign:"center", padding:"56px 20px" }}>
                 <div style={{ fontSize:16, color:C.warn, marginBottom:28 }}>この日付のデータはありません</div>
                 <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:10 }}>
-                  <button onClick={() => { setCurrentDate(allDates[0]); setDateNotFound(false); if (dateInputRef.current) dateInputRef.current.value = ""; }}
+                  <button onClick={() => { setCurrentDate(allDates[0]); setDateNotFound(false); setPickerSelected(undefined); }}
                     style={{ fontSize:13, color:C.text, background:C.card, border:`1px solid ${C.border}`,
                       borderRadius:20, padding:"8px 20px", cursor:"pointer" }}>
                     データの最初の日付を見る（{fmtDate(allDates[0])}）
                   </button>
-                  <button onClick={() => { setCurrentDate(allDates[allDates.length-1]); setDateNotFound(false); if (dateInputRef.current) dateInputRef.current.value = ""; }}
+                  <button onClick={() => { setCurrentDate(allDates[allDates.length-1]); setDateNotFound(false); setPickerSelected(undefined); }}
                     style={{ fontSize:13, color:C.text, background:C.card, border:`1px solid ${C.border}`,
                       borderRadius:20, padding:"8px 20px", cursor:"pointer" }}>
                     データの最後の日付を見る（{fmtDate(allDates[allDates.length-1])}）

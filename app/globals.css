@@ -1,3 +1,5 @@
+@import 'react-day-picker/style.css';
+
 .outer-container {
   min-height: 100vh;
   max-width: 480px;
@@ -15,7 +17,14 @@
   .pc-br {
     display: inline;
   }
-  .sp-calendar-emoji {
-    display: none;
-  }
+}
+
+.rdp-root {
+  --rdp-accent-color: #B794F6;
+  --rdp-accent-background-color: #1D1B34;
+  --rdp-today-color: #C7A8FF;
+  --rdp-day_button-border-radius: 8px;
+  color: #B9AEDF;
+  font-family: 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
+  padding: 12px;
 }
